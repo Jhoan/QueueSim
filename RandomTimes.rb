@@ -33,27 +33,27 @@ class RandomTimes
 					end
 				else
 					c = 0.767 - 3.36/@params['lambda']
-					beta = Math::PI/Math.sqrt(3.0 * @params['lambda'])
-					alpha = beta * @params['lambda']
+					beta = Math::PI/Math.sqrt(3.0*@params['lambda'])
+					alpha = beta*@params['lambda']
 					k = Math.log(c) - @params['lambda'] - Math.log(beta)
-
-					begin
+					@size.times do
 						begin
-							u = Random.rand() 
-						end while u == 0 || u == 1
-						x = (alpha - Math.log((1.0 - u)/u))/beta
-						n = (x + 0.5).floor
-						if ( n < 0)
-							next
-						end
-						v = Random.rand()
-						y = alpha - beta * x
-						lhs = y + Math.log(v/(1.0 + Math.exp(y))**2)
-						rhs = k + n*Math.log(@params['lambda']) - Math.lgamma(n+1)[0]
-						if (lhs <= rhs)
-							@list.push (n)
-						end
-					end while true
+							u = Random.rand()
+							x = (alpha - Math.log((1.0 - u)/u))/beta
+							n = (x + 0.5).floor
+							if (n < 0)
+								continue
+							end
+							v = Random.rand()
+							y = alpha - beta*x
+							lhs = y + Math.log(v/(1.0 + Math.exp(y))**2)
+							rhs = k + n*Math.log(@params['lambda']) - Math.lgamma(n+1)[0]
+							if (lhs <= rhs)
+								@list.push(n)
+								break
+							end
+						end while true
+					end
 				end
 
 			else 
