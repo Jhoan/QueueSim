@@ -1,24 +1,67 @@
 class RandomTimes
 	def initialize(size,distro,params)
 		if distro == "Exponential" && params['lambda'] == nil
-			raise "You need to provide a lambda parameter to generate Exponential values"
+			raise "You need to provide a lambda parameter to generate Exponential or Poisson distributed values"
+		end
+		if (distro == "Poisson" || distro == "Exponential") && params['lambda'] < 0
+			raise "Lambda should be greater than 0"
 		end
 		@distro = distro
 		@list = Array.new()
 		@params = params
-		generateValues(size)
+		@size = size
+		generateValues()
 	end
 
-	def generateValues(size)
-		size.times do 
-			case @distro
+	def generateValues()
+		@list.clear
+		case @distro
 			when "Exponential" 
-				@list.push( ((-1 * Math.log( Random.rand() ) ) / @params['lambda'] * 100).floor / 100.0)
-			else
-				@list.push(Random.rand())
-			end
+				@size.times do
+					@list.push(((-1 * Math.log( Random.rand() ) ) / @params['lambda'] * 100).floor / 100.0)
+				end
+			when "Poisson"	
+				if @params['lambda'] < 30 #Small lambda, using Knoth algorithm
+					l = Math.exp(-1*@params['lambda'])
+					@size.times do
+						k, p = 0 , 1
+						begin
+							k += 1
+							p *= Random.rand()
+						end while p > l
+						@list.push(k-1)
+					end
+				else
+					c = 0.767 - 3.36/@params['lambda']
+					beta = Math::PI/Math.sqrt(3.0 * @params['lambda'])
+					alpha = beta * @params['lambda']
+					k = Math.log(c) - @params['lambda'] - Math.log(beta)
 
+					begin
+						begin
+							u = Random.rand() 
+						end while u == 0 || u == 1
+						x = (alpha - Math.log((1.0 - u)/u))/beta
+						n = (x + 0.5).floor
+						if ( n < 0)
+							next
+						end
+						v = Random.rand()
+						y = alpha - beta * x
+						lhs = y + Math.log(v/(1.0 + Math.exp(y))**2)
+						rhs = k + n*Math.log(@params['lambda']) - Math.lgamma(n+1)[0]
+						if (lhs <= rhs)
+							@list.push (n)
+						end
+					end while true
+				end
+
+			else 
+				@size.times do
+					@list.push(Random.rand())
+				end
 		end
+
 	end
 	def distro
 		@distro
@@ -28,8 +71,9 @@ class RandomTimes
 	end
 end
 #test
-params = { 'lambda' => 2}
-t = RandomTimes.new(10000,"Exponential", params)
+params = { 'lambda' => 40}
+t = RandomTimes.new(5,"Poisson", params)
+t.generateValues()
 File.open("test.txt", "w") do |file| 
 	t.list.each do |number|
 		file.puts number
