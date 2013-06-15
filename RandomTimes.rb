@@ -66,7 +66,7 @@ class RandomTimes
 		end
 
 	end
-	def getTMean
+	def TMean
 		case @distro 
 			when "Exponential"
 				@lambda**-1.to_f
@@ -76,7 +76,7 @@ class RandomTimes
 				return 1/2
 		end
 	end
-	def getRMean
+	def RMean
 		sum = 0
 		@list.each { |n| sum+=n }
 		sum/@size
@@ -90,14 +90,15 @@ class RandomTimes
 	def size
 		@size
 	end
-end
-#test
-t = RandomTimes.new(1000,"Poisson", 10)
-t.generateValues()
-File.open("test.txt", "w") do |file| 
-	t.list.each do |number|
-		file.puts number
+	def size=(newSize)
+		@size = newSize
+		generateValues()
 	end
+	def distro=(newDistro)
+		@distro = newDistro
+		generateValues()
+	end
+
 end
-puts t.getTMean
-puts t.getRMean
+
+
