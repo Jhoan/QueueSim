@@ -1,3 +1,5 @@
+
+	#Calss: RandomTimes: Generates the times for the arrivals based on a distribution.
 class RandomTimes
 	def initialize(size,distro,lambda)
 		if distro == "Exponential" && lambda == nil

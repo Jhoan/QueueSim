@@ -3,6 +3,8 @@
 *.pdf
 *.txt
 test.rb
+QueueSim.sublime-project
+QueueSim.sublime-workspace
 .bundle
 .config
 coverage
