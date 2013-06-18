@@ -49,5 +49,8 @@ class Server
 			end
 		end
 	end
+	def attendedTasks
+		@attendedTasks
+	end
 end
 
