@@ -4,28 +4,26 @@
 	#
 	class Task 
 		def initialize(newTime)
-			@arrivalTime = newTime
-			@startServiceTime = nil
-			@departureTime = nil
+			@times = {'arrival' => newTime , 'startService' => nil, 'departure' => nil}
 		end
 
 		def arrivalTime
-			@arrivalTime
+			@times['arrival']
 		end
 
 		def startServiceTime
-			@startServiceTime
+			@times['startService']
 		end
 
 		def departureTime
-			@departureTime
+			@times['departure']
 		end
 
 		def startServiceTime=(newTime)
-			@startServiceTime = newTime
+			@times['startService'] = newTime
 		end
 
 		def departureTime=(newTime)
-			@departureTime = newTime
+			@times['departure'] = newTime
 
 	end

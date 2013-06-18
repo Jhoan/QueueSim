@@ -1,7 +1,7 @@
 
-	#Calss: RandomTimes: Generates the times for the arrivals based on a distribution.
-class RandomTimes
-	def initialize(size,distro,lambda)
+	#Calss: RandomTime: Generates the times for the arrivals based on a distribution.
+class RandomTime
+	def initialize(size = 0,distro,lambda)
 		if distro == "Exponential" && lambda == nil
 			raise "You need to provide a lambda parameter to generate Exponential or Poisson distributed values"
 		end
@@ -15,20 +15,20 @@ class RandomTimes
 		@list = Array.new()
 		@lambda = lambda
 		@size = size
-		generateValues()
+		generateValues(@size)
 	end
 
-	def generateValues()
+	def generateValues(number)
 		@list.clear
 		case @distro
 			when "Exponential" 
-				@size.times do
+				number.times do
 					@list.push(((-1 * Math.log( Random.rand() ) ) / @lambda * 100).floor / 100.0)
 				end
 			when "Poisson"	
 				if @lambda < 30 #Small lambda, using Knoth algorithm
 					l = Math.exp(-1*@lambda)
-					@size.times do
+					number.times do
 						k, p = 0 , 1
 						begin
 							k += 1
@@ -41,7 +41,7 @@ class RandomTimes
 					beta = Math::PI/Math.sqrt(3.0*@lambda)
 					alpha = beta*@lambda
 					k = Math.log(c) - @lambda - Math.log(beta)
-					@size.times do
+					number.times do
 						begin
 							u = Random.rand()
 							x = (alpha - Math.log((1.0 - u)/u))/beta
@@ -62,7 +62,7 @@ class RandomTimes
 				end
 
 			else 
-				@size.times do
+				number.times do
 					@list.push(Random.rand())
 				end
 		end
