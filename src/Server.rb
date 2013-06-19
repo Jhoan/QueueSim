@@ -26,6 +26,7 @@ class Server
 		@task.startServiceTime = System.time
 		switchState()
 		@serviceTime.generateValues(1)
+		#animation
 	end
 
 	def shouldFree?
