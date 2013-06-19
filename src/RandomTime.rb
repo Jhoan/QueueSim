@@ -42,7 +42,7 @@ class RandomTime
 					alpha = beta*@lambda
 					k = Math.log(c) - @lambda - Math.log(beta)
 					number.times do
-						begin
+						loop
 							u = Random.rand()
 							x = (alpha - Math.log((1.0 - u)/u))/beta
 							n = (x + 0.5).floor
@@ -57,7 +57,7 @@ class RandomTime
 								@list.push(n)
 								break
 							end
-						end while true
+						end
 					end
 				end
 

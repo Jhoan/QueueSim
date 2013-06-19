@@ -28,7 +28,8 @@ class Queue
 
 	def leastUsedFreeServer
 		least = 0
-		for i in 1..@numServers-1 do
+		#for i in 1..@numServers-1 do
+		1.upto(@numServers-1) do |i|
 			if @servers[i].attendedTasks < @servers[least].attendedTasks
 				least = i
 			end
@@ -38,7 +39,8 @@ class Queue
 
 	def fastestFreeServer
 		fastest = 0
-		for i in 1..@numServers-1 do
+		#for i in 1..@numServers-1 do
+		1.upto(@numServers-1) do |i|
 			if @servers[i].serviceRate < @servers[fastest].serviceRate
 				fastest = i
 			end
