@@ -77,7 +77,7 @@ class Queue
 		end
 	end
 
-	def push(newTask)
+	def receive(newTask)
 		@tasks.unshift(newTask)
 	end
 

@@ -4,12 +4,12 @@
 	#
 class Server
 
-	def initialize(newServiceRate,newSink)
+	def initialize(newServiceRate,distribution = "Exponential",newSink)
 		@serviceRate = newServiceRate
 		@task = nil
 		@attendedTasks = 0
 		@sink = newSink
-		@serviceTime = RandomTime.new("Exponential",@serviceRate)
+		@serviceTime = RandomTime.new(distribution,@serviceRate)
 		@busy = false
 	end
 
