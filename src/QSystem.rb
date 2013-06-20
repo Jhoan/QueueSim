@@ -3,7 +3,9 @@
 	#
 	#
 class QSystem
-
+	def initialize()
+		
+	end
 
 
 end

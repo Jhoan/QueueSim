@@ -47,7 +47,7 @@ class RandomTime
 							x = (alpha - Math.log((1.0 - u)/u))/beta
 							n = (x + 0.5).floor
 							if (n < 0)
-								continue
+								next
 							end
 							v = Random.rand()
 							y = alpha - beta*x

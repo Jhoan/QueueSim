@@ -77,6 +77,9 @@ class Queue
 		end
 	end
 
+	def push(newTask)
+		@tasks.unshift(newTask)
+	end
 
 	def update()
 		return if @length == 0 || @idleServers == 0
