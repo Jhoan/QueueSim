@@ -82,7 +82,13 @@ class Queue
 	end
 
 	def update()
-		return if @length == 0 || @idleServers == 0
+		@servers.each do |server|
+			server.update()
+		end
+		if @length == 0 
+			puts "Empty queue. Nothing to do."
+			return
+		end
 		limit = @length
 		limit = @idleServers if @idleServers < limit
 

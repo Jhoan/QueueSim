@@ -45,6 +45,7 @@ class Server
 	def update
 		if busy?
 			if shouldFree?
+				puts "Task #{@task.arrivalTime} is departing."
 				free()
 				#animation here
 			end

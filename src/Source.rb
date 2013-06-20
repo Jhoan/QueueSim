@@ -28,11 +28,13 @@ class Source
 	def update
 		if shouldSend?
 			if canSend?
+				"New task arrived."
 				send
 				@arrived += 1
 				arrivalTime.generateValues(1)
 				#animate
 			else
+				"New dropped task."
 				@dropped += 1
 				#animate
 			end
